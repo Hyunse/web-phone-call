@@ -1,0 +1,41 @@
+type Query {
+  sayBye: String!
+  sayHello(name: String!): SayHelloResponse!
+  GetAllUser: getUserAllResponse!
+}
+
+type SayHelloResponse {
+  text: String!
+  error: Boolean!
+}
+
+type User {
+  id: Int!
+  email: String!
+  name: String!
+  country: String!
+  password: String!
+  createdAt: String!
+  updatedAt: String
+}
+
+type SignInResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type Mutation {
+  SignIn(email: String!, password: String!): SignInResponse!
+  SignUp(email: String!, name: String!, country: String!, password: String!): SignUpResponse!
+}
+
+type SignUpResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type getUserAllResponse {
+  users: [User]
+}
