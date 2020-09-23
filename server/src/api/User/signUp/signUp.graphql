@@ -8,8 +8,8 @@ type Mutation {
   SignUp(
     email: String!
     name: String!
-    country: String!
-    age: Int!
+    country: String
+    age: Int
     password: String!
   ): SignUpResponse!
 }
