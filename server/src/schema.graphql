@@ -1,20 +1,25 @@
-type Query {
-  sayBye: String!
-  sayHello(name: String!): SayHelloResponse!
-  GetAllUser: getUserAllResponse!
+type FacebookConnectResponse {
+  ok: Boolean!
+  error: String
+  token: String
 }
 
-type SayHelloResponse {
-  text: String!
-  error: Boolean!
+type Mutation {
+  FacebookConnect(name: String!, email: String, fbId: String!): FacebookConnectResponse!
+  SignIn(email: String!, password: String!): SignInResponse!
+  SignUp(email: String!, name: String!, country: String!, age: Int!, password: String!): SignUpResponse!
 }
 
 type User {
   id: Int!
-  email: String!
+  email: String
+  verifiedEmail: Boolean!
+  phoneNumber: String
+  verifiedPhoneNumber: Boolean!
+  profilePhoto: String
   name: String!
-  country: String!
-  password: String!
+  fbId: String
+  password: String
   createdAt: String!
   updatedAt: String
 }
@@ -25,11 +30,6 @@ type SignInResponse {
   token: String
 }
 
-type Mutation {
-  SignIn(email: String!, password: String!): SignInResponse!
-  SignUp(email: String!, name: String!, country: String!, password: String!): SignUpResponse!
-}
-
 type SignUpResponse {
   ok: Boolean!
   error: String
@@ -38,4 +38,18 @@ type SignUpResponse {
 
 type getUserAllResponse {
   users: [User]
+}
+
+type Query {
+  GetAllUser: getUserAllResponse!
+}
+
+type Verification {
+  id: Int!
+  target: String!
+  payload: String!
+  key: String!
+  verified: Boolean!
+  createdAt: String!
+  updatedAt: String!
 }

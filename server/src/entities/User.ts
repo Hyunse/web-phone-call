@@ -17,18 +17,30 @@ const BCRYPT_ROUNDS = 10;
 class User extends BaseEntity {
   @PrimaryGeneratedColumn() id: number;
 
-  @Column({ type: 'text', unique: true })
+  @Column({ type: 'text', nullable: true })
   @IsEmail()
-  email: string;
+  email: string | null;
+
+  @Column({ type: 'boolean', default: false })
+  verifiedEmail: string;
 
   @Column({ type: 'text' })
   name: string;
 
-  @Column({ type: 'text' })
-  country: string;
-
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   password: string;
+
+  @Column({ type: 'text', nullable: true })
+  phoneNumber: string;
+
+  @Column({ type: 'boolean', default: false })
+  verifiedPhoneNumber: boolean;
+
+  @Column({ type: 'text', nullable: true })
+  profilePhoto: string;
+
+  @Column({ type: 'text', nullable: true })
+  fbId: String;
 
   @CreateDateColumn() createdAt: string;
   @UpdateDateColumn() updatedAt: string;

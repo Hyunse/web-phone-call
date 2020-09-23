@@ -9,6 +9,7 @@ type Mutation {
     email: String!
     name: String!
     country: String!
+    age: Int!
     password: String!
   ): SignUpResponse!
 }
