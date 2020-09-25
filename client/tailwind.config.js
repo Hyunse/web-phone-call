@@ -9,7 +9,7 @@ module.exports = {
         accent: '#f7fafc',
         primary: '#e2e8f0',
         secondary: '#81e6d9',
-      },
+      }
     },
   },
 };
