@@ -1,14 +1,28 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import Icon from '@assets/images/icon.png';
 import NextButton from '@components/NextButton';
+import { SIGN_IN } from './SiginInQueries';
+import { useMutation } from '@apollo/react-hooks';
 
+/**
+ * Sign In
+ */
 const SignIn = () => {
   const history = useHistory();
+  const [signIn, { data }] = useMutation(SIGN_IN);
 
   const clickSignUp = () => {
     history.push('/signUp');
   };
+
+  const clickSignIn = () => {
+    signIn({ variables: { email: 'test1@test.com', password: '1234' } });
+  };
+
+  if (data && data.SignIn && data.SignIn.token) {
+    return <Redirect to="/friends" />;
+  }
 
   return (
     <div className="container mx-auto px-10 h-screen flex flex-col items-center">
@@ -28,7 +42,7 @@ const SignIn = () => {
         />
       </div>
       <div className="flex flex-col items-center mb-20">
-        <NextButton />
+        <NextButton onClick={clickSignIn} />
         <div onClick={clickSignUp} className="cursor-pointer mt-10">
           <span className="text-sm opacity-75">DON'T HAVE AN ACCOUNT?</span>
         </div>

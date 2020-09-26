@@ -3,12 +3,17 @@ import { useHistory } from 'react-router-dom';
 import Icon from '@assets/images/icon.png';
 import NextButton from '@components/NextButton';
 
+/**
+ * Sign Up
+ */
 const SignUp = () => {
   const history = useHistory();
 
   const clickSignIn = () => {
     history.push('/signIn');
   };
+
+  const clickNextButton = () => {};
 
   return (
     <div className="container mx-auto px-10 h-screen flex flex-col items-center">
@@ -36,7 +41,7 @@ const SignUp = () => {
         />
       </div>
       <div className="flex flex-col items-center mb-20">
-        <NextButton />
+        <NextButton onClick={clickNextButton} />
         <div onClick={clickSignIn} className="cursor-pointer mt-10">
           <span className="text-sm opacity-75">ALREADY HAVE AN ACCOUNT?</span>
         </div>
