@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { IsEmail } from 'class-validator';
+import { IsEmail, validateOrReject } from 'class-validator';
 import {
   Entity,
   BaseEntity,
@@ -18,7 +18,7 @@ class User extends BaseEntity {
   @PrimaryGeneratedColumn() id: number;
 
   @Column({ type: 'text', nullable: true })
-  @IsEmail()
+  @IsEmail(undefined, { message: 'Incorect Email' })
   email: string | null;
 
   @Column({ type: 'boolean', default: false })
@@ -47,6 +47,18 @@ class User extends BaseEntity {
 
   public comparePassword(password: string): Promise<boolean> {
     return bcrypt.compare(password, this.password);
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  async validate(): Promise<void> {
+    try {
+      await validateOrReject(this, { validationError: { target: false } });
+    } catch (errors) {
+      throw new Error(
+        errors[0].constraints[Object.keys(errors[0].constraints)[0]]
+      );
+    }
   }
 
   @BeforeInsert()
