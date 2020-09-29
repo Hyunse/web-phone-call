@@ -3,8 +3,8 @@ import { GetUserMutationArgs, GetUserResponse } from '@type/graph';
 import { Resolvers } from '@type/resolvers';
 
 const resolvers: Resolvers = {
-  Query: {
-    GetUser: async (_, args: GetUserMutationArgs): Promise<GetUserResponse> => {
+  Mutation: {
+    GetUser: async (_, args: GetUserMutationArgs, context): Promise<GetUserResponse> => {
       const { email } = args;
 
       try {

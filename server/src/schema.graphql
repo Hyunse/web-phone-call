@@ -1,14 +1,20 @@
+type AddFriendResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  AddFriend(email: String!): AddFriendResponse!
+  FacebookConnect(name: String!, email: String, fbId: String!): FacebookConnectResponse!
+  GetUser(email: String): GetUserResponse!
+  SignIn(email: String!, password: String!): SignInResponse!
+  SignUp(email: String!, name: String!, country: String, age: Int, password: String!): SignUpResponse!
+}
+
 type FacebookConnectResponse {
   ok: Boolean!
   error: String
   token: String
-}
-
-type Mutation {
-  FacebookConnect(name: String!, email: String, fbId: String!): FacebookConnectResponse!
-  GetUser(email: String!): GetUserResponse!
-  SignIn(email: String!, password: String!): SignInResponse!
-  SignUp(email: String!, name: String!, country: String, age: Int, password: String!): SignUpResponse!
 }
 
 type GetUserResponse {

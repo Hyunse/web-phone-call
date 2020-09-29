@@ -4,6 +4,6 @@ type GetUserResponse {
   user: User
 }
 
-type Query {
+type Mutation {
   GetUser(email: String): GetUserResponse!
 }
