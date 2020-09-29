@@ -6,8 +6,15 @@ type FacebookConnectResponse {
 
 type Mutation {
   FacebookConnect(name: String!, email: String, fbId: String!): FacebookConnectResponse!
+  GetUser(email: String!): GetUserResponse!
   SignIn(email: String!, password: String!): SignInResponse!
   SignUp(email: String!, name: String!, country: String, age: Int, password: String!): SignUpResponse!
+}
+
+type GetUserResponse {
+  ok: Boolean!
+  error: String
+  user: User
 }
 
 type User {

@@ -22,7 +22,7 @@ class User extends BaseEntity {
   email: string | null;
 
   @Column({ type: 'boolean', default: false })
-  verifiedEmail: string;
+  verifiedEmail: boolean;
 
   @Column({ type: 'text' })
   name: string;
@@ -40,7 +40,10 @@ class User extends BaseEntity {
   profilePhoto: string;
 
   @Column({ type: 'text', nullable: true })
-  fbId: String;
+  fbId: string;
+
+  @Column('jsonb', { nullable: true })
+  friendsList: User[];
 
   @CreateDateColumn() createdAt: string;
   @UpdateDateColumn() updatedAt: string;
