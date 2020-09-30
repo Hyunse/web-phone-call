@@ -1,0 +1,8 @@
+type RemoveFriendResponse {
+  ok: Boolean!
+  error: String
+}
+
+type Mutation {
+  RemoveFriend(email: String!): RemoveFriendResponse!
+}

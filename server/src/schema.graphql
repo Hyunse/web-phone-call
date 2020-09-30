@@ -6,6 +6,8 @@ type AddFriendResponse {
 type Mutation {
   AddFriend(email: String!): AddFriendResponse!
   FacebookConnect(name: String!, email: String, fbId: String!): FacebookConnectResponse!
+  RemoveFriend(email: String!): RemoveFriendResponse!
+  RemoveUser: RemoveUserResponse!
   SignIn(email: String!, password: String!): SignInResponse!
   SignUp(email: String!, name: String!, country: String, age: Int, password: String!): SignUpResponse!
 }
@@ -14,6 +16,16 @@ type FacebookConnectResponse {
   ok: Boolean!
   error: String
   token: String
+}
+
+type RemoveFriendResponse {
+  ok: Boolean!
+  error: String
+}
+
+type RemoveUserResponse {
+  ok: Boolean!
+  error: String
 }
 
 type GetUserResponse {

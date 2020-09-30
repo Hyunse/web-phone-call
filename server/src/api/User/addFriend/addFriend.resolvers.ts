@@ -19,8 +19,14 @@ const resolver: Resolvers = {
           const friend = await User.findOne({ email });
 
           if (currentUser && friend) {
-            currentUser.friendsList.push(friend);
-            currentUser.save();
+            const friendIndex = currentUser.friendsList.findIndex(
+              (friend) => friend.email === email
+            );
+
+            if (friendIndex === -1) {
+              currentUser.friendsList.push(friend);
+              currentUser.save();
+            }
 
             return {
               ok: true,
