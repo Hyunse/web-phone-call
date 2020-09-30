@@ -6,7 +6,6 @@ type AddFriendResponse {
 type Mutation {
   AddFriend(email: String!): AddFriendResponse!
   FacebookConnect(name: String!, email: String, fbId: String!): FacebookConnectResponse!
-  GetUser(email: String): GetUserResponse!
   SignIn(email: String!, password: String!): SignInResponse!
   SignUp(email: String!, name: String!, country: String, age: Int, password: String!): SignUpResponse!
 }
@@ -23,6 +22,11 @@ type GetUserResponse {
   user: User
 }
 
+type Query {
+  GetUser(email: String): GetUserResponse!
+  GetAllUser: getUserAllResponse!
+}
+
 type User {
   id: Int!
   email: String
@@ -33,6 +37,7 @@ type User {
   name: String!
   fbId: String
   password: String
+  friendsList: [User]
   createdAt: String!
   updatedAt: String
 }
@@ -51,10 +56,6 @@ type SignUpResponse {
 
 type getUserAllResponse {
   users: [User]
-}
-
-type Query {
-  GetAllUser: getUserAllResponse!
 }
 
 type Verification {

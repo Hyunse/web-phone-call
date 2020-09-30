@@ -42,7 +42,7 @@ class User extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   fbId: string;
 
-  @Column('jsonb', { nullable: true })
+  @Column('jsonb', { default: [] })
   friendsList: User[];
 
   @CreateDateColumn() createdAt: string;
@@ -68,12 +68,12 @@ class User extends BaseEntity {
   @BeforeUpdate()
   async savePassword(): Promise<void> {
     if (this.password) {
-      const hashPassword = await this.hassPassword(this.password);
+      const hashPassword = await this.hashPassword(this.password);
       this.password = hashPassword;
     }
   }
 
-  private hassPassword(password: string): Promise<string> {
+  private hashPassword(password: string): Promise<string> {
     return bcrypt.hash(password, BCRYPT_ROUNDS);
   }
 }

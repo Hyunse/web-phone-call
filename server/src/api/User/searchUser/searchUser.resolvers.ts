@@ -1,10 +1,14 @@
 import User from '@entities/User';
-import { GetUserMutationArgs, GetUserResponse } from '@type/graph';
+import { GetUserQueryArgs, GetUserResponse } from '@type/graph';
 import { Resolvers } from '@type/resolvers';
 
 const resolvers: Resolvers = {
-  Mutation: {
-    GetUser: async (_, args: GetUserMutationArgs, context): Promise<GetUserResponse> => {
+  Query: {
+    GetUser: async (
+      _,
+      args: GetUserQueryArgs,
+      __
+    ): Promise<GetUserResponse> => {
       const { email } = args;
 
       try {

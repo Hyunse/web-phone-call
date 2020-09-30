@@ -1,3 +1,4 @@
+import User from '@entities/User';
 import { AddFriendMutationArgs, AddFriendResponse } from '@type/graph';
 import { Resolvers } from '@type/resolvers';
 import privateResolver from '@utils/privateResolver';
@@ -10,12 +11,30 @@ const resolver: Resolvers = {
         args: AddFriendMutationArgs,
         { req }
       ): Promise<AddFriendResponse> => {
-        const user = req.user;
-        console.log(user);
-        return {
-          ok: true,
-          error: null,
-        };
+        const { id } = req.user;
+        const { email } = args;
+
+        try {
+          const currentUser = await User.findOne({ id });
+          const friend = await User.findOne({ email });
+
+          if (currentUser && friend) {
+            currentUser.friendsList.push(friend);
+            currentUser.save();
+
+            return {
+              ok: true,
+              error: null,
+            };
+          } else {
+            throw new Error('Save Failed');
+          }
+        } catch (error) {
+          return {
+            ok: true,
+            error: error.message,
+          };
+        }
       }
     ),
   },
