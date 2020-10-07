@@ -1,7 +1,9 @@
-type getUserAllResponse {
-  users: [User]
+type GetCurrentUserResponse {
+  ok: Boolean!,
+  error: String,
+  user: User
 }
 
 type Query {
-  GetAllUser: getUserAllResponse!
+  GetCurrentUser: GetCurrentUserResponse!
 }

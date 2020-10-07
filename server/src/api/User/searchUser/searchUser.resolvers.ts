@@ -1,14 +1,14 @@
 import User from '@entities/User';
-import { GetUserQueryArgs, GetUserResponse } from '@type/graph';
+import { SearchUserQueryArgs, SearchUserResponse } from '@type/graph';
 import { Resolvers } from '@type/resolvers';
 
 const resolvers: Resolvers = {
   Query: {
-    GetUser: async (
+    SearchUser: async (
       _,
-      args: GetUserQueryArgs,
+      args: SearchUserQueryArgs,
       __
-    ): Promise<GetUserResponse> => {
+    ): Promise<SearchUserResponse> => {
       const { email } = args;
 
       try {
