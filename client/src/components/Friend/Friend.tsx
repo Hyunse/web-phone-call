@@ -8,9 +8,9 @@ interface IProps {
 
 const Friend: React.FC<IProps> = ({ email, name }) => {
   return (
-    <div key={email} className="flex items-center px-10">
+    <div key={email} className="flex items-center px-10 py-5 border-b-2 border-primary">
       <img src={Default} alt={name} className="rounded-full w-12 h-12" />
-      <div className="ml-10">{name}</div>
+      <div className="ml-10 text-lg">{name}</div>
     </div>
   );
 };

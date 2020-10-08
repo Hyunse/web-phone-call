@@ -6,6 +6,7 @@ import SignUp from '@routes/SignUp';
 import SignIn from '@routes/SignIn';
 import Home from '@routes/Home';
 import Main from '@routes/Main';
+import Search from '@routes/Search'
 
 const App = () => {
   // const { data } = useQuery(GET_ALL_USER);
@@ -17,6 +18,7 @@ const App = () => {
         <Switch>
           <Route path="/signUp" component={SignUp} />
           <Route path="/signIn" component={SignIn} />
+          <Route path="/friends/search" component={Search} />
           <Route path="/friends" component={Main} />
           <Route exact path="/" component={Home} />
         </Switch>
