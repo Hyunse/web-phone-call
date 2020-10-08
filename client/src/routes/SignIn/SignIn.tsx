@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Icon from '@assets/images/icon.png';
 import NextButton from '@components/NextButton';
 import { SIGN_IN } from './SignInQueries';
