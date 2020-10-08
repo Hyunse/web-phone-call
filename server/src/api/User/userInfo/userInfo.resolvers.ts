@@ -6,7 +6,6 @@ const resolvers: Resolvers = {
   Query: {
     GetCurrentUser: async (_, __, { req }): Promise<GetCurrentUserResponse> => {
       const { id } = req.user;
-      console.log(req.user)
 
       try {
         const currentUser = await User.findOne({ id });
