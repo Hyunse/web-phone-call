@@ -3,13 +3,14 @@ import { SEARCH_USER } from './SearchQueries';
 import { useLazyQuery } from '@apollo/client';
 import Alert from '@components/Alert';
 import Loader from '@components/Loader';
+import Default from '@assets/images/default.png';
 
 interface IProps {}
 
 const Search: React.FC<IProps> = () => {
   const emailRef = useRef<HTMLInputElement>(null);
   const [alert, setAlert] = useState('');
-  const [searchUser, { loading }] = useLazyQuery(SEARCH_USER, {
+  const [searchUser, { loading, data }] = useLazyQuery(SEARCH_USER, {
     onError: (err) => console.log(err),
     onCompleted: (data) => {
       if (data && data.SearchUser) {
@@ -59,7 +60,24 @@ const Search: React.FC<IProps> = () => {
           </button>
         </div>
       </div>
-      <div className="flex flex-col justify-center text-center pl-6">{loading && <Loader />}</div>
+      <div className="flex flex-col justify-center text-center pl-6">
+        {loading && <Loader />}
+      </div>
+      <div className="flex flex-col justify-center text-center">
+        {data && data.SearchUser && data.SearchUser.user && (
+          <div className="">
+            <img
+              src={Default}
+              alt={data.SearchUser.user.name}
+              className="rounded-full w-20 h-20"
+            />
+            <div className="text-xl">{data.SearchUser.user.name}</div>
+            <div className="px-10 py-3 rounded-full text-base bg-gradient-to-r from-pink-600 bg-pink-500 outline-none focus:outline-none">
+              ADD FRIEND
+            </div>
+          </div>
+        )}
+      </div>
       {alert && showError(alert)}
     </div>
   );
