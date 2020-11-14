@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { SEARCH_USER } from './SearchQueries';
-import { useLazyQuery } from '@apollo/client';
+import { SEARCH_USER, ADD_FRIEND } from './SearchQueries';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import Alert from '@components/Alert';
 import Loader from '@components/Loader';
 import Default from '@assets/images/default.png';
@@ -17,7 +17,21 @@ const Search: React.FC<IProps> = () => {
         const { ok, error, user } = data.SearchUser;
 
         if (ok && user) {
-          console.log(user);
+          setAlert('');
+        } else {
+          setAlert(error);
+        }
+      }
+    },
+  });
+  const [addFriend] = useMutation(ADD_FRIEND, {
+    onError: (err) => console.log(err),
+    onCompleted: (data) => {
+      console.log(data);
+      if (data && data.AddFriend) {
+        const { ok, error } = data.AddFriend;
+
+        if (ok) {
           setAlert('');
         } else {
           setAlert(error);
@@ -35,6 +49,11 @@ const Search: React.FC<IProps> = () => {
       const email = emailRef.current.value;
       searchUser({ variables: { email } });
     }
+  };
+
+  const onClickAddFriend = (email: string) => {
+    console.log(email);
+    addFriend({ variables: { email } });
   };
 
   return (
@@ -65,15 +84,18 @@ const Search: React.FC<IProps> = () => {
       </div>
       <div className="flex flex-col justify-center text-center">
         {data && data.SearchUser && data.SearchUser.user && (
-          <div className="">
+          <div>
             <img
               src={Default}
               alt={data.SearchUser.user.name}
-              className="rounded-full w-20 h-20"
+              className="rounded-full w-20 h-20 content-center m-auto"
             />
             <div className="text-xl">{data.SearchUser.user.name}</div>
-            <div className="px-10 py-3 rounded-full text-base bg-gradient-to-r from-pink-600 bg-pink-500 outline-none focus:outline-none">
-              ADD FRIEND
+            <div
+              className="mt-5 px-10 py-3 rounded-full text-base bg-gradient-to-r from-pink-600 bg-pink-500 outline-none focus:outline-none"
+              onClick={() => onClickAddFriend(data.SearchUser.user.email)}
+            >
+              Add Friend
             </div>
           </div>
         )}

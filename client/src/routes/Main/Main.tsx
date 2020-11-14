@@ -11,7 +11,7 @@ interface IProps {}
 const Main: React.FC<IProps> = () => {
   const [alert, setAlert] = useState('');
   const [firendsList, setFriendsList] = useState([]);
-  const { loading, data } = useQuery(GET_CURRENT_USER, {
+  const { loading } = useQuery(GET_CURRENT_USER, {
     onError: (err) => console.log(err),
     onCompleted: (data) => {
       if (data && data.GetCurrentUser) {
