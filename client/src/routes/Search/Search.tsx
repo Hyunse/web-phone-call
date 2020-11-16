@@ -9,7 +9,7 @@ interface IProps {}
 
 const Search: React.FC<IProps> = () => {
   const emailRef = useRef<HTMLInputElement>(null);
-  const [alert, setAlert] = useState('');
+  const [alert, setAlert] = useState({ message: '', type: ''});
   const [searchUser, { loading, data }] = useLazyQuery(SEARCH_USER, {
     onError: (err) => console.log(err),
     onCompleted: (data) => {
@@ -17,9 +17,9 @@ const Search: React.FC<IProps> = () => {
         const { ok, error, user } = data.SearchUser;
 
         if (ok && user) {
-          setAlert('');
+          setAlert({ message: '', type: '' });
         } else {
-          setAlert(error);
+          setAlert({ message: error, type: 'error'});
         }
       }
     },
@@ -27,21 +27,20 @@ const Search: React.FC<IProps> = () => {
   const [addFriend] = useMutation(ADD_FRIEND, {
     onError: (err) => console.log(err),
     onCompleted: (data) => {
-      console.log(data);
       if (data && data.AddFriend) {
         const { ok, error } = data.AddFriend;
 
         if (ok) {
-          setAlert('');
+          setAlert({ message: 'Friend Added', type: 'success' });
         } else {
-          setAlert(error);
+          setAlert({ message: error, type: 'error'});
         }
       }
     },
   });
 
-  const showError = (msg: string) => {
-    return <Alert message={msg} />;
+  const showAlert = () => {
+    return <Alert message={alert.message} type={alert.type} />;
   };
 
   const onClickSearch = () => {
@@ -52,7 +51,6 @@ const Search: React.FC<IProps> = () => {
   };
 
   const onClickAddFriend = (email: string) => {
-    console.log(email);
     addFriend({ variables: { email } });
   };
 
@@ -100,7 +98,7 @@ const Search: React.FC<IProps> = () => {
           </div>
         )}
       </div>
-      {alert && showError(alert)}
+      {alert.type && showAlert()}
     </div>
   );
 };

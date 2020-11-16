@@ -2,12 +2,30 @@ import React from 'react';
 
 interface IProps {
   message: string;
+  type: string;
 }
 
-const Alert: React.FC<IProps> = ({ message }) => {
+const Alert: React.FC<IProps> = ({ message, type }) => {
+  const bgColor = (type:string) => {
+    let color;
+    switch (type) {
+      case 'error':
+        color = 'bg-pink-600';
+        break;
+      case 'success': 
+        color = 'bg-blue-500'
+        break;
+      default:
+        color = 'bg-green-500'
+        break;
+    }
+
+    return color;
+  }
+
   return (
     <div
-      className="flex items-center bg-pink-600 text-white text-sm font-bold px-4 py-3 z-10 absolute bottom-0 w-full justify-center"
+      className={`flex items-center text-white text-sm font-bold px-4 py-3 z-10 absolute bottom-0 w-full justify-center ${bgColor(type)}`}
       role="alert"
     >
       <svg

@@ -11,7 +11,7 @@ import Alert from '@components/Alert';
  */
 const SignUp = () => {
   const history = useHistory();
-  const [alert, setAlert] = useState('');
+  const [alert, setAlert] = useState({ message: '', type: '' });
   const emailRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -37,10 +37,6 @@ const SignUp = () => {
     history.push('/signIn');
   };
 
-  const showError = (msg: string) => {
-    return <Alert message={msg} />;
-  };
-
   const clickNextButton = async (e: React.MouseEvent) => {
     e.preventDefault();
 
@@ -59,9 +55,13 @@ const SignUp = () => {
         // GQL SignUp
         signUp({ variables: { email, name, password } });
       } else {
-        setAlert('Password mismatch');
+        setAlert({ message: 'Password mismatch', type: 'error' });
       }
     }
+  };
+
+  const showAlert = () => {
+    return <Alert message={alert.message} type={alert.type} />;
   };
 
   return (
@@ -99,7 +99,7 @@ const SignUp = () => {
           <span className="text-sm opacity-75">ALREADY HAVE AN ACCOUNT?</span>
         </div>
       </div>
-      {alert && showError(alert)}
+      {alert.type && showAlert()}
       <footer className="absolute bottom-0 mb-1 text-xs opacity-25">
         <a
           rel="noopener noreferrer"

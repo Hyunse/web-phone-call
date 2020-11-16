@@ -11,7 +11,7 @@ import Alert from '@components/Alert';
  */
 const SignIn = () => {
   const history = useHistory();
-  const [alert, setAlert] = useState('');
+  const [alert, setAlert] = useState({ message: '', type: ''});
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const [signIn] = useMutation(SIGN_IN, {
@@ -24,7 +24,7 @@ const SignIn = () => {
           localStorage.setItem('V-JWT', token);
           history.replace('/friends');
         } else {
-          setAlert(error);
+          setAlert({ message: error, type: 'error'});
         }
       }
     },
@@ -51,8 +51,8 @@ const SignIn = () => {
     }
   };
 
-  const showError = (msg: string) => {
-    return <Alert message={msg} />;
+  const showAlert = () => {
+    return <Alert message={alert.message} type={alert.type} />;
   };
 
   return (
@@ -80,7 +80,7 @@ const SignIn = () => {
           <span className="text-sm opacity-75">DON'T HAVE AN ACCOUNT?</span>
         </div>
       </div>
-      {alert && showError(alert)}
+      {alert.type && showAlert()}
       <footer className="absolute bottom-0 mb-1 text-xs opacity-25">
         <a
           rel="noopener noreferrer"

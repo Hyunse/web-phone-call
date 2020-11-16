@@ -9,7 +9,7 @@ import Search from '@assets/images/search.png';
 interface IProps {}
 
 const Main: React.FC<IProps> = () => {
-  const [alert, setAlert] = useState('');
+  const [alert, setAlert] = useState({ message: '', type: ''});
   const [firendsList, setFriendsList] = useState([]);
   const { loading } = useQuery(GET_CURRENT_USER, {
     onError: (err) => console.log(err),
@@ -20,14 +20,14 @@ const Main: React.FC<IProps> = () => {
         if (ok && user) {
           setFriendsList(user.friendsList);
         } else {
-          setAlert(error);
+          setAlert({ message: error, type: 'error'});
         }
       }
     },
   });
 
-  const showError = (msg: string) => {
-    return <Alert message={msg} />;
+  const showAlert = () => {
+    return <Alert message={alert.message} type={alert.type} />;
   };
 
   return (
@@ -50,7 +50,7 @@ const Main: React.FC<IProps> = () => {
             return <Friend key={id} email={email} name={name} />;
           })}
       </div>
-      {alert && showError(alert)}
+      {alert.type && showAlert()}
     </div>
   );
 };
