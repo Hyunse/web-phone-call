@@ -3,6 +3,7 @@ import { SEARCH_USER, ADD_FRIEND } from './SearchQueries';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import Alert from '@components/Alert';
 import Loader from '@components/Loader';
+import PrevButton from '@components/PrevButton'
 import Default from '@assets/images/default.png';
 
 interface IProps {}
@@ -24,6 +25,7 @@ const Search: React.FC<IProps> = () => {
       }
     },
   });
+
   const [addFriend] = useMutation(ADD_FRIEND, {
     onError: (err) => console.log(err),
     onCompleted: (data) => {
@@ -56,8 +58,11 @@ const Search: React.FC<IProps> = () => {
 
   return (
     <div className="container mx-auto px-10 h-screen flex flex-col items-center">
-      <div className="flex flex-row w-full justify-center text-center my-10">
-        <div className="items-center">
+      <div className="flex flex-row w-full text-center my-10">
+        <div className="absolute">
+          <PrevButton />
+        </div>
+        <div className="flex-1">
           <span>FREINDS</span>
         </div>
       </div>

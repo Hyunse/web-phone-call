@@ -9,8 +9,9 @@ import Search from '@assets/images/search.png';
 interface IProps {}
 
 const Main: React.FC<IProps> = () => {
-  const [alert, setAlert] = useState({ message: '', type: ''});
+  const [alert, setAlert] = useState({ message: '', type: '' });
   const [firendsList, setFriendsList] = useState([]);
+  const [selected, setSelected] = useState(-1);
   const { loading } = useQuery(GET_CURRENT_USER, {
     onError: (err) => console.log(err),
     onCompleted: (data) => {
@@ -20,11 +21,15 @@ const Main: React.FC<IProps> = () => {
         if (ok && user) {
           setFriendsList(user.friendsList);
         } else {
-          setAlert({ message: error, type: 'error'});
+          setAlert({ message: error, type: 'error' });
         }
       }
     },
   });
+
+  const selectFriend = (id: number) => {
+    setSelected(selected !== id ? id : -1);
+  };
 
   const showAlert = () => {
     return <Alert message={alert.message} type={alert.type} />;
@@ -43,11 +48,18 @@ const Main: React.FC<IProps> = () => {
         </div>
       </div>
       <div>
-        {loading && 'Loading...'}
         {!loading &&
           firendsList &&
           firendsList.map(({ id, email, name }) => {
-            return <Friend key={id} email={email} name={name} />;
+            return (
+              <Friend
+                key={id}
+                email={email}
+                name={name}
+                selected={selected === id ? true : false}
+                onClick={() => selectFriend(id)}
+              />
+            );
           })}
       </div>
       {alert.type && showAlert()}
