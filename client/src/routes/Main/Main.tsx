@@ -31,6 +31,10 @@ const Main: React.FC<IProps> = () => {
     setSelected(selected !== id ? id : -1);
   };
 
+  const callFriend = () => {
+    console.log('click');
+  }
+
   const showAlert = () => {
     return <Alert message={alert.message} type={alert.type} />;
   };
@@ -58,6 +62,7 @@ const Main: React.FC<IProps> = () => {
                 name={name}
                 selected={selected === id ? true : false}
                 onClick={() => selectFriend(id)}
+                onClickCall={callFriend}
               />
             );
           })}
